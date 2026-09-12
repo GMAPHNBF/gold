@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HNB Finance | රන් ණය කැල්කියුලේටරය</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;700;800&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0A2647;
+      --ocean: #1789C4;
+      --aqua: #6FD6E8;
+      --leaf: #5FAE3E;
+      --gold: #FFC94D;
+      --gold-deep: #D4A017;
+      --cream: #F5F8FB;
+      --ink: #0A2647;
+      --card: #FFFFFF;
+      --line: rgba(10, 38, 71, 0.10);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      font-family: 'Noto Sans Sinhala', 'Space Grotesk', sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+    .page { max-width: 1180px; margin: 0 auto; padding: 28px 20px 60px; }
+
+    /* ---------- Header ---------- */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--navy); font-family: 'Space Grotesk'; font-weight: 700; font-size: 15px;
+      box-shadow: 0 4px 14px rgba(212, 160, 23, 0.35);
+    }
+    .brand-name { font-family: 'Space Grotesk'; font-weight: 700; font-size: 19px; letter-spacing: -0.01em; }
+    .brand-name span { color: var(--leaf); }
+    .brand-tag { font-family: 'Abhaya Libre'; font-size: 14px; color: rgba(10, 38, 71, 0.55); margin-top: -2px; }
+    .badge {
+      font-family: 'Space Grotesk'; font-size: 12px; font-weight: 600;
+      background: rgba(212, 160, 23, 0.10); color: var(--gold-deep);
+      padding: 7px 13px; border-radius: 99px;
+      border: 1px solid rgba(212, 160, 23, 0.3); white-space: nowrap;
+    }
+    .badge .date { color: var(--navy); font-weight: 700; }
+
+    .home-btn {
+      font-family: 'Space Grotesk'; font-weight: 600; font-size: 13px;
+      background: var(--navy); color: white; padding: 8px 18px; border-radius: 99px;
+      border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(10, 38, 71, 0.15);
+      transition: background 0.2s, transform 0.1s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .home-btn:hover { background: #0d3363; }
+    .home-btn:active { transform: scale(0.97); }
+    .home-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .hero-title {
+      font-family: 'Abhaya Libre'; font-weight: 800;
+      font-size: clamp(28px, 4vw, 42px); line-height: 1.25;
+      margin: 0 0 8px; color: var(--navy);
+    }
+    .hero-sub {
+      font-size: 16px; color: rgba(10, 38, 71, 0.62);
+      margin: 0 0 12px; max-width: 680px; line-height: 1.6;
+    }
+    .effective-note {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Space Grotesk'; font-size: 12.5px; font-weight: 600;
+      background: rgba(95, 174, 62, 0.10); color: #3f7d28;
+      border: 1px solid rgba(95, 174, 62, 0.3);
+      padding: 7px 14px; border-radius: 99px; margin-bottom: 26px;
+    }
+    .effective-note .dot-live {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--leaf);
+      box-shadow: 0 0 0 0 rgba(95, 174, 62, 0.6); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(95, 174, 62, 0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(95, 174, 62, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(95, 174, 62, 0); }
+    }
+
+    /* ---------- Main grid ---------- */
+    .grid { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .tank-wrap { order: 2; }
+      .form-card { order: 1; }
+    }
+
+    /* ---------- Gold visual ---------- */
+    .tank-wrap {
+      background: linear-gradient(180deg, #1a1200, #3d2c00 70%, #1a1200);
+      border-radius: 24px; padding: 26px 22px 22px; position: relative; overflow: hidden;
+      box-shadow: 0 18px 40px -14px rgba(61, 44, 0, 0.55);
+      min-height: 520px; display: flex; flex-direction: column;
+    }
+    .tank-label {
+      color: rgba(255, 255, 255, 0.7); font-size: 12px; letter-spacing: 0.04em;
+      font-family: 'Space Grotesk'; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .tank-shell {
+      position: relative; flex: 1; border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(255, 201, 77, 0.25);
+      overflow: hidden; min-height: 300px;
+    }
+    .gold-pile {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 0%;
+      transition: height 1.4s cubic-bezier(.22, .9, .3, 1.15);
+      background: linear-gradient(180deg, #FFE082 0%, #FFC94D 25%, #D4A017 60%, #8a6a0a 100%);
+      box-shadow: inset 0 6px 20px rgba(255, 255, 255, 0.4);
+    }
+    .gold-pile::before {
+      content: '';
+      position: absolute; top: -8px; left: 0; right: 0; height: 16px;
+      background: radial-gradient(ellipse at center, rgba(255, 235, 150, 0.9) 0%, transparent 70%);
+    }
+    .gold-grain {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #FFF3C4, #D4A017 70%, #8a6a0a);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+    .tank-readout { position: absolute; top: 16px; left: 0; right: 0; text-align: center; z-index: 3; pointer-events: none; }
+    .tank-percent {
+      font-family: 'Space Grotesk'; font-weight: 700; color: var(--gold); font-size: 34px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    .tank-percent-label {
+      font-size: 11px; color: rgba(255, 255, 255, 0.75); letter-spacing: 0.05em;
+      font-family: 'Space Grotesk'; text-transform: uppercase; margin-top: 2px;
+    }
+    .tank-footnote { margin-top: 14px; display: flex; justify-content: space-between; font-size: 11.5px; color: rgba(255, 255, 255, 0.65); }
+    .legend { display: flex; align-items: center; gap: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* ---------- Form Card ---------- */
+    .form-card {
+      background: var(--card); border-radius: 24px; border: 1px solid var(--line);
+      padding: 28px 28px 26px; box-shadow: 0 10px 30px -18px rgba(10, 38, 71, 0.25);
+    }
+    .field { margin-bottom: 22px; }
+    .field label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: rgba(10, 38, 71, 0.7); margin-bottom: 9px; font-family: 'Space Grotesk';
+    }
+    .amount-input-wrap {
+      display: flex; align-items: center; border: 1.5px solid var(--line);
+      border-radius: 14px; padding: 0 6px 0 16px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .amount-input-wrap:focus-within { border-color: var(--gold-deep); box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.12); }
+    .amount-input-wrap span { font-family: 'Space Grotesk'; font-weight: 600; color: var(--gold-deep); font-size: 16px; }
+    .amount-input-wrap input {
+      border: none; outline: none; background: transparent;
+      font-family: 'Space Grotesk'; font-size: 22px; font-weight: 600;
+      padding: 14px 10px; width: 100%; color: var(--navy);
+    }
+    .quick-amounts { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .chip {
+      border: 1.5px solid var(--line); background: transparent;
+      padding: 6px 12px; border-radius: 99px;
+      font-size: 12.5px; font-family: 'Space Grotesk'; font-weight: 600;
+      color: var(--navy); cursor: pointer; transition: .15s;
+    }
+    .chip:hover { border-color: var(--gold-deep); color: var(--gold-deep); }
+
+    .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .seg button {
+      border: 1.5px solid var(--line); background: transparent;
+      padding: 11px 10px; border-radius: 12px;
+      font-family: 'Noto Sans Sinhala'; font-size: 13px; font-weight: 600;
+      color: rgba(10, 38, 71, 0.65); cursor: pointer; transition: .15s;
+    }
+    .seg button.active { border-color: var(--gold-deep); background: rgba(212, 160, 23, 0.08); color: var(--gold-deep); }
+
+    .scheme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .scheme-grid button {
+      border: 1.5px solid var(--line); background: transparent;
+      padding: 10px 6px; border-radius: 12px;
+      font-family: 'Space Grotesk'; font-size: 12px; font-weight: 600;
+      color: var(--navy); cursor: pointer; transition: .15s; text-align: center;
+    }
+    .scheme-grid button.active { border-color: var(--gold-deep); background: rgba(212, 160, 23, 0.10); color: var(--gold-deep); }
+
+    .period-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .period-grid button {
+      border: 1.5px solid var(--line); background: transparent;
+      padding: 10px 4px; border-radius: 12px;
+      font-family: 'Space Grotesk'; cursor: pointer; text-align: center; transition: .15s;
+    }
+    .period-grid button .m { font-weight: 700; font-size: 13px; color: var(--navy); display: block; }
+    .period-grid button .r { font-size: 10px; color: var(--gold-deep); font-weight: 600; display: block; margin-top: 2px; }
+    .period-grid button.active { border-color: var(--gold-deep); background: rgba(212, 160, 23, 0.10); }
+
+    .karat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .karat-grid button {
+      border: 1.5px solid var(--line); background: transparent;
+      padding: 10px 4px; border-radius: 12px;
+      font-family: 'Space Grotesk'; font-size: 13px; font-weight: 700;
+      color: var(--navy); cursor: pointer; transition: .15s;
+    }
+    .karat-grid button.active { border-color: var(--gold-deep); background: rgba(212, 160, 23, 0.10); color: var(--gold-deep); }
+
+    .divider { height: 1px; background: var(--line); margin: 24px 0; }
+
+    /* ---------- Results ---------- */
+    .results { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 520px) { .results { grid-template-columns: 1fr; } }
+    .result-box { border-radius: 16px; padding: 16px 18px; background: var(--cream); border: 1px solid var(--line); }
+    .result-box.primary { background: linear-gradient(135deg, #3d2c00, #6b4e00); border: none; }
+    .rb-label {
+      font-size: 12px; color: rgba(10, 38, 71, 0.55);
+      font-family: 'Space Grotesk'; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 6px;
+    }
+    .result-box.primary .rb-label { color: rgba(255, 255, 255, 0.65); }
+    .rb-value { font-family: 'Space Grotesk'; font-weight: 700; font-size: 24px; color: var(--navy); }
+    .result-box.primary .rb-value { color: var(--gold); font-size: 27px; }
+    .rb-sub { font-size: 12px; color: rgba(10, 38, 71, 0.5); margin-top: 4px; }
+    .result-box.primary .rb-sub { color: rgba(255, 255, 255, 0.55); }
+
+    .rate-pill {
+      margin-top: 22px; display: flex; align-items: center; gap: 10px;
+      background: rgba(255, 201, 77, 0.15); border: 1px solid rgba(255, 201, 77, 0.4);
+      padding: 12px 16px; border-radius: 14px;
+    }
+    .rate-pill .icon { font-size: 18px; }
+    .rate-pill .txt { font-size: 12.8px; color: rgba(10, 38, 71, 0.75); line-height: 1.5; }
+    .rate-pill b { color: var(--navy); }
+
+    .warn-box {
+      margin-top: 14px; display: none; align-items: flex-start; gap: 10px;
+      background: rgba(220, 53, 69, 0.08); border: 1px solid rgba(220, 53, 69, 0.3);
+      padding: 12px 14px; border-radius: 12px;
+      font-size: 12.5px; color: #a4262c; line-height: 1.5;
+    }
+    .warn-box.show { display: flex; }
+    .warn-box .wi { font-size: 16px; }
+
+    .disclaimer { margin-top: 18px; font-size: 11px; color: rgba(10, 38, 71, 0.45); line-height: 1.6; }
+
+    footer { margin-top: 34px; text-align: center; font-size: 12px; color: rgba(10, 38, 71, 0.45); }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">HNB</div>
+        <div>
+          <div class="brand-name">HNB <span>FINANCE</span></div>
+          <div class="brand-tag">25 වසරක විශ්වාසය</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <a href="https://gmaphnbf.github.io/HNBFGMAP/" class="home-btn" target="_blank">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Home
+        </a>
+        <div class="badge">රන් ණය — <span class="date">2026 ජූනි 11 සිට බලපැවැත්වේ</span></div>
+      </div>
+    </div>
+
+    <h1 class="hero-title">ඔබේ රන් ණය මුදල<br>කල්තියා දැනගන්න</h1>
+    <p class="hero-sub">රන් වර්ගය (කැරට්), බර, ණය කාලය සහ යෝජනා ක්‍රමය තෝරන්න — ඔබට ලැබෙන උපරිම ණය මුදල සහ අවම බර/මුදල් සීමාවන් සජීවීව බලන්න.</p>
+    <div class="effective-note">
+      <span class="dot-live"></span>
+      අලුත් රන් ණය අනුපාත — 2026 ජූනි 11 සිට ක්‍රියාත්මකයි (HNBF/PBMD(GL)/26/20)
+    </div>
+
+    <div class="grid">
+
+      <!-- GOLD VISUAL -->
+      <div class="tank-wrap">
+        <div class="tank-label">රන් ණය දර්ශකය</div>
+        <div class="tank-shell" id="tankShell">
+          <div class="tank-readout">
+            <div class="tank-percent" id="tankPercent">0g</div>
+            <div class="tank-percent-label">රන් බර</div>
+          </div>
+          <div class="gold-pile" id="goldPile"></div>
+          <div id="grainLayer"></div>
+        </div>
+        <div class="tank-footnote">
+          <div class="legend"><span class="dot" style="background:var(--gold);"></span>රන් බර</div>
+          <div class="legend"><span class="dot" style="background:var(--aqua);"></span>ණය මුදල</div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-card">
+
+        <div class="field">
+          <label>රන් ණය යෝජනා ක්‍රමය</label>
+          <div class="scheme-grid" id="schemeGrid"></div>
+        </div>
+
+        <div class="field">
+          <label>රන් වර්ගය (කැරට්)</label>
+          <div class="karat-grid" id="karatGrid"></div>
+        </div>
+
+        <div class="field">
+          <label>ණය කාල සීමාව</label>
+          <div class="period-grid" id="periodGrid"></div>
+        </div>
+
+        <div class="field">
+          <label>රන් බර (ග්‍රෑම්)</label>
+          <div class="amount-input-wrap">
+            <span>g</span>
+            <input type="text" inputmode="decimal" id="weightInput" value="8">
+          </div>
+          <div class="quick-amounts" id="quickWeights"></div>
+        </div>
+
+        <div class="warn-box" id="warnBox">
+          <span class="wi">⚠️</span>
+          <span id="warnText"></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="results">
+          <div class="result-box primary" id="heroBox" style="grid-column:1/-1;">
+            <div class="rb-label" id="heroLabel">ලැබෙන රන් ණය මුදල</div>
+            <div class="rb-value" id="heroValue">රු. 0</div>
+            <div class="rb-sub" id="heroSub">උපරිම ණය මුදල</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">ග්‍රෑමයකට ණය මුදල</div>
+            <div class="rb-value" id="rateValue">රු. 0</div>
+            <div class="rb-sub" id="rateSubLabel">තෝරාගත් කැරට් සහ කාලය අනුව</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label" id="secondLabel">අවම බර / අවම මුදල</div>
+            <div class="rb-value" id="secondValue">—</div>
+            <div class="rb-sub" id="secondSub">අදාළ යෝජනා ක්‍රමයට</div>
+          </div>
+        </div>
+
+        <div class="rate-pill">
+          <div class="icon">🥇</div>
+          <div class="txt" id="pillText">Normal / VIP / Gold Plan යෝජනා ක්‍රමවලට අවම රන් බර <b>0.500g</b>. Ran Shana / Cash in Flash / VIP-Special / Super Max / VIP Loyalty වලට <b>1g</b>.</div>
+        </div>
+
+        <div class="disclaimer">
+          * මෙම ගණනය කිරීම දර්ශනාත්මක අවබෝධයක් සඳහා පමණි. අවසාන ණය මුදල, පොලී අනුපාත සහ නියමයන් සඳහා HNB FINANCE ශාඛාවක් හෝ hnbfinance.lk වෙත පිවිසෙන්න. (HNBF/PBMD(GL)/26/20 — 2026 ජූනි 11 සිට)
+        </div>
+      </div>
+    </div>
+
+    <footer>HNB FINANCE — hnbfinance.lk &nbsp;•&nbsp; 011 202 48 48 &nbsp;•&nbsp; Sri Lanka Deposit Insurance Scheme සාමාජික ආයතනයකි</footer>
+  </div>
+
+  <script>
+    // ===== GOLD LOAN ADVANCE RATES =====
+    // Structure: SCHEMES[scheme][periodKey] = { karat: advancePerGram }
+    // Period keys vary by scheme.
+
+    const SCHEMES = {
+      normal: {
+        name: 'Normal',
+        periods: ['15D', 'M01', 'M02', 'M03', 'M06', 'M12'],
+        periodLabels: { '15D': 'දින 15', 'M01': 'මාස 1', 'M02': 'මාස 2', 'M03': 'මාස 3', 'M06': 'මාස 6', 'M12': 'මාස 12' },
+        minWeight: 0.5,
+        minAmount: 5000,
+        rates: {
+          '15D': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M01': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M02': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M03': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M06': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M12': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+        }
+      },
+      cashFlash: {
+        name: 'Cash in Flash',
+        periods: ['15D'],
+        periodLabels: { '15D': 'දින 15' },
+        minWeight: 1,
+        minAmount: 50000,
+        rates: {
+          '15D': { 24: 27500, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+        }
+      },
+      vip: {
+        name: 'VIP',
+        periods: ['M01', 'M02', 'M03', 'M06', 'M12'],
+        periodLabels: { 'M01': 'මාස 1', 'M02': 'මාස 2', 'M03': 'මාස 3', 'M06': 'මාස 6', 'M12': 'මාස 12' },
+        minWeight: 0.5,
+        minAmount: 5000,
+        rates: {
+          'M01': { 24: 28000, 23: 26600, 22: 25000, 21: 23400, 20: 22300, 19: 20600, 18: 19300, 17: 18300, 16: 17200, 15: 16300 },
+          'M02': { 24: 26600, 23: 25300, 22: 24200, 21: 23100, 20: 22100, 19: 20400, 18: 18000, 17: 18100, 16: 17000, 15: 16100 },
+          'M03': { 24: 25300, 23: 24500, 22: 23400, 21: 22400, 20: 21300, 19: 20000, 18: 18200, 17: 18000, 16: 17000, 15: 16000 },
+          'M06': { 24: 24600, 23: 23500, 22: 22500, 21: 21600, 20: 20600, 19: 20000, 18: 19200, 17: 17600, 16: 16600, 15: 15600 },
+          'M12': { 24: 23800, 23: 22900, 22: 21900, 21: 20900, 20: 20000, 19: 20000, 18: 20000, 17: 17000, 16: 16000, 15: 15000 },
+        }
+      },
+      vipSpecial: {
+        name: 'VIP Special',
+        periods: ['M03', 'M12'],
+        periodLabels: { 'M03': 'මාස 3', 'M12': 'මාස 12' },
+        minWeight: 1,
+        minAmount: 1000000,
+        rates: {
+          'M03': { 24: 26600, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19200, 17: 18200, 16: 17100, 15: 16200 },
+          'M12': { 24: 25600, 23: 24500, 22: 23500, 21: 22400, 20: 21300, 19: 20200, 18: 19200, 17: 18200, 16: 17200, 15: 16200 },
+        }
+      },
+      superMax: {
+        name: 'Super Max',
+        periods: ['M03', 'M06', 'M12'],
+        periodLabels: { 'M03': 'මාස 3', 'M06': 'මාස 6', 'M12': 'මාස 12' },
+        minWeight: 1,
+        minAmount: 2000000,
+        rates: {
+          'M03': { 24: 25300, 23: 23500, 22: 22500, 21: 21500, 20: 20500, 19: 19500, 18: 18400, 17: 17500, 16: 16500, 15: 15600 },
+          'M06': { 24: 24300, 23: 23500, 22: 22500, 21: 21500, 20: 20500, 19: 19500, 18: 18400, 17: 17400, 16: 16500, 15: 15600 },
+          'M12': { 24: 23300, 23: 22000, 22: 21000, 21: 20000, 20: 19000, 19: 18000, 18: 17000, 17: 16000, 16: 15000, 15: 14000 },
+        }
+      },
+      goldPlan: {
+        name: 'Gold Plan',
+        periods: ['M03', 'M06', 'M12'],
+        periodLabels: { 'M03': 'මාස 3', 'M06': 'මාස 6', 'M12': 'මාස 12' },
+        minWeight: 0.5,
+        minAmount: 30000,
+        rates: {
+          'M03': { 24: 25700, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19300 },
+          'M06': { 24: 25700, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19300 },
+          'M12': { 24: 25700, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19300 },
+        }
+      },
+      ranSahana: {
+        name: 'Ran Sahana',
+        periods: ['M06', 'M09', 'M12'],
+        periodLabels: { 'M06': 'මාස 6', 'M09': 'මාස 9', 'M12': 'මාස 12' },
+        minWeight: 1,
+        minAmount: 5000,
+        rates: {
+          'M06': { 24: 27300, 23: 24600, 22: 23600, 21: 22500, 20: 21400, 19: 20300, 18: 19300, 17: 18200, 16: 17200, 15: 16200 },
+          'M09': { 24: 23700, 23: 22700, 22: 21800, 21: 20800, 20: 19800, 19: 18800, 18: 17800, 17: 17800, 16: 17800, 15: 17800 },
+          'M12': { 24: 23700, 23: 22700, 22: 21800, 21: 20800, 20: 19800, 19: 18800, 18: 17800, 17: 17800, 16: 17800, 15: 17800 },
+        }
+      },
+      vipLoyalty: {
+        name: 'VIP Loyalty',
+        periods: ['M12'],
+        periodLabels: { 'M12': 'මාස 12' },
+        minWeight: 1,
+        minAmount: 5000,
+        rates: {
+          'M12': { 24: 24500, 23: 23600, 22: 22600, 21: 21600, 20: 20600, 19: 19600, 18: 18600, 17: 18600, 16: 18600, 15: 18600 },
+        }
+      },
+    };
+
+    const KARATS = [24, 23, 22, 21, 20, 19, 18, 17, 16, 15];
+
+    let state = {
+      scheme: 'normal',
+      karat: 22,
+      period: 'M03',
+      weight: 8,
+    };
+
+    // ---------- Build UI ----------
+    const schemeGrid = document.getElementById('schemeGrid');
+    Object.keys(SCHEMES).forEach(key => {
+      const btn = document.createElement('button');
+      btn.dataset.val = key;
+      btn.textContent = SCHEMES[key].name;
+      if (key === state.scheme) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        state.scheme = key;
+        // Reset period if not available
+        if (!SCHEMES[key].periods.includes(state.period)) {
+          state.period = SCHEMES[key].periods[0];
+        }
+        // Reset karat if not available in this scheme
+        if (!SCHEMES[key].rates[state.period] || SCHEMES[key].rates[state.period][state.karat] === undefined) {
+          state.karat = Object.keys(SCHEMES[key].rates[state.period])[0] ? Number(Object.keys(SCHEMES[key].rates[state.period])[0]) : 22;
+        }
+        refreshAll();
+        calculate();
+      });
+      schemeGrid.appendChild(btn);
+    });
+
+    const karatGrid = document.getElementById('karatGrid');
+    KARATS.forEach(k => {
+      const btn = document.createElement('button');
+      btn.dataset.val = k;
+      btn.textContent = k + 'K';
+      if (k === state.karat) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        state.karat = k;
+        refreshAll();
+        calculate();
+      });
+      karatGrid.appendChild(btn);
+    });
+
+    const periodGrid = document.getElementById('periodGrid');
+
+    function buildPeriodGrid() {
+      periodGrid.innerHTML = '';
+      const scheme = SCHEMES[state.scheme];
+      scheme.periods.forEach(p => {
+        const btn = document.createElement('button');
+        btn.dataset.val = p;
+        const rate = scheme.rates[p] && scheme.rates[p][state.karat];
+        btn.innerHTML = `<span class="m">${scheme.periodLabels[p]}</span><span class="r">${rate ? 'රු.' + rate.toLocaleString() : 'N/A'}</span>`;
+        if (p === state.period) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          state.period = p;
+          refreshAll();
+          calculate();
+        });
+        periodGrid.appendChild(btn);
+      });
+    }
+
+    function refreshAll() {
+      // scheme buttons
+      [...schemeGrid.children].forEach(b => b.classList.toggle('active', b.dataset.val === state.scheme));
+      // karat buttons
+      [...karatGrid.children].forEach(b => {
+        const k = Number(b.dataset.val);
+        const scheme = SCHEMES[state.scheme];
+        const available = scheme.rates[state.period] && scheme.rates[state.period][k] !== undefined;
+        b.classList.toggle('active', k === state.karat);
+        b.style.opacity = available ? 1 : 0.35;
+        b.disabled = !available;
+      });
+      buildPeriodGrid();
+    }
+
+    // Weight input
+    const weightInput = document.getElementById('weightInput');
+    function formatWeight(n) {
+      const num = Number(n);
+      if (isNaN(num)) return '';
+      return num % 1 === 0 ? num.toString() : num.toFixed(3).replace(/\.?0+$/, '');
+    }
+    weightInput.addEventListener('input', (e) => {
+      const raw = e.target.value.replace(/[^0-9.]/g, '');
+      const parts = raw.split('.');
+      const clean = parts.length > 1 ? parts[0] + '.' + parts.slice(1).join('') : parts[0];
+      const val = parseFloat(clean);
+      state.weight = isNaN(val) ? 0 : val;
+      e.target.value = clean;
+      calculate();
+    });
+
+    const quickWeights = document.getElementById('quickWeights');
+    [1, 2, 5, 8, 10, 20].forEach(w => {
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.textContent = w + 'g';
+      btn.addEventListener('click', () => {
+        state.weight = w;
+        weightInput.value = formatWeight(w);
+        calculate();
+      });
+      quickWeights.appendChild(btn);
+    });
+
+    function rs(n) { return 'රු. ' + Math.round(n).toLocaleString('en-US'); }
+
+    function animateValue(el, start, end, duration, formatter) {
+      const startTime = performance.now();
+      function step(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = start + (end - start) * eased;
+        el.textContent = formatter(val);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    let lastHero = 0, lastRate = 0;
+
+    const warnBox = document.getElementById('warnBox');
+    const warnText = document.getElementById('warnText');
+
+    function calculate() {
+      const scheme = SCHEMES[state.scheme];
+      const periodRates = scheme.rates[state.period];
+      if (!periodRates) return;
+      const ratePerGram = periodRates[state.karat];
+      if (ratePerGram === undefined) return;
+
+      const weight = state.weight || 0;
+      const loanAmount = weight * ratePerGram;
+
+      // ---- warnings ----
+      let warnings = [];
+      if (weight > 0 && weight < scheme.minWeight) {
+        warnings.push(`මෙම යෝජනා ක්‍රමයට අවම රන් බර ${scheme.minWeight}g. ඔබ දැමූ බර ${weight}g.`);
+      }
+      if (loanAmount > 0 && loanAmount < scheme.minAmount) {
+        warnings.push(`මෙම යෝජනා ක්‍රමයට අවම ණය මුදල රු. ${scheme.minAmount.toLocaleString()}. ඔබේ ණය මුදල රු. ${Math.round(loanAmount).toLocaleString()}.`);
+      }
+      if (warnings.length) {
+        warnBox.classList.add('show');
+        warnText.innerHTML = warnings.join('<br>');
+      } else {
+        warnBox.classList.remove('show');
+      }
+
+      // ---- results ----
+      document.getElementById('heroLabel').textContent = 'ලැබෙන රන් ණය මුදල (' + scheme.name + ' • ' + scheme.periodLabels[state.period] + ')';
+      document.getElementById('heroSub').textContent = `${weight}g × රු. ${ratePerGram.toLocaleString()}/g`;
+      animateValue(document.getElementById('heroValue'), lastHero, loanAmount, 900, rs);
+
+      document.getElementById('rateValue').textContent = 'රු. ' + ratePerGram.toLocaleString();
+      document.getElementById('rateSubLabel').textContent = `${state.karat}K රන් සඳහා`;
+
+      const karatRate = ratePerGram;
+      document.getElementById('secondLabel').textContent = 'අවම බර / අවම මුදල';
+      document.getElementById('secondValue').textContent = scheme.minWeight + 'g / රු. ' + scheme.minAmount.toLocaleString();
+      document.getElementById('secondSub').textContent = scheme.name + ' යෝජනා ක්‍රමයට';
+
+      // ---- gold pile visual ----
+      // Scale: fill based on weight relative to 30g max visual
+      const fillPct = Math.min((weight / 30) * 100, 95);
+      document.getElementById('goldPile').style.height = fillPct + '%';
+
+      // Percent readout: show weight
+      animateValue(document.getElementById('tankPercent'), lastRate, weight, 700, (v) => v.toFixed(2) + 'g');
+
+      lastHero = loanAmount;
+      lastRate = weight;
+
+      spawnGrains();
+    }
+
+    // Gold grains visual
+    const grainLayer = document.getElementById('grainLayer');
+    function spawnGrains() {
+      grainLayer.innerHTML = '';
+      const count = 14;
+      for (let i = 0; i < count; i++) {
+        const g = document.createElement('div');
+        g.className = 'gold-grain';
+        const size = 5 + Math.random() * 8;
+        g.style.width = size + 'px';
+        g.style.height = size + 'px';
+        g.style.left = (5 + Math.random() * 90) + '%';
+        g.style.bottom = (Math.random() * 60) + '%';
+        g.style.animationDelay = (Math.random() * 3) + 's';
+        grainLayer.appendChild(g);
+      }
+    }
+
+    // Init
+    weightInput.value = formatWeight(state.weight);
+    refreshAll();
+    calculate();
+  </script>
+</body>
+</html>
